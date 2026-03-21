@@ -1,6 +1,6 @@
 # Tailor.CV
 
-Um utilitário alimentado por IA para otimizar, adequar e gerar currículos profissionais prontos para envio, com base em descrições de vagas específicas. O CVHacker ajuda candidatos a passarem pelos filtros de ATS (Applicant Tracking Systems) ajustando o conteúdo e formatando o resultado em templates aceitos pelo mercado.
+Um utilitário alimentado por IA para otimizar, adequar e gerar currículos profissionais prontos para envio, com base em descrições de vagas específicas. O Tailor.CV ajuda candidatos a passarem pelos filtros de ATS (Applicant Tracking Systems) ajustando o conteúdo e formatando o resultado em templates aceitos pelo mercado.
 
 ## 🚀 Funcionalidades
 
