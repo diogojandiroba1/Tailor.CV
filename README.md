@@ -39,7 +39,6 @@ O sistema possui fluxos de análise, otimização e formatação:
 * Node.js instalado
 * Python 3.10+
 * Chave de API do LLM escolhido (ex: `GEMINI_API_KEY`)
-* *Nota: WeasyPrint pode exigir instalação de dependências de sistema adicionais (como Pango/Cairo) dependendo do seu SO.*
 
 ### Rodando o Backend (FastAPI)
 \`\`\`bash
