@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { Upload, FileText, Shield, Zap, CheckCircle, Download, Layout } from "lucide-react"; // npm install lucide-react
+import { Upload, FileText, Shield, Zap, CheckCircle, Download, Layout } from "lucide-react"; 
 
 export default function Home() {
   const [file, setFile] = useState<File | null>(null);
   const [vaga, setVaga] = useState("");
   const [modo, setModo] = useState("Gaps");
-  const [template, setTemplate] = useState("Moderno");
+  const [template, setTemplate] = useState("Template Recomendado");
   const [loading, setLoading] = useState(false);
   const [sucesso, setSucesso] = useState(false);
 
@@ -148,8 +148,8 @@ export default function Home() {
                 Template
               </h3>
               <div className="space-y-3">
-                {['Moderno', 'Clássico', 'Tech'].map((t) => (
-                  <label key={t} className="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-slate-50 transition-colors">
+                {['Template Recomendado'].map((t) => (
+                  <label key={t} className="flex items-center gap-3 p-3 border-2 border-indigo-200 rounded-lg cursor-pointer bg-indigo-50 transition-colors">
                     <input 
                       type="radio" 
                       name="template" 
@@ -157,7 +157,7 @@ export default function Home() {
                       onChange={() => setTemplate(t)}
                       className="text-indigo-600 focus:ring-indigo-500"
                     />
-                    <span className="text-sm font-medium">{t}</span>
+                    <span className="text-sm font-medium text-indigo-900">{t}</span>
                   </label>
                 ))}
               </div>

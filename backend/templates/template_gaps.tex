@@ -1,0 +1,48 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[portuguese]{babel}
+\usepackage{geometry}
+\geometry{margin=2cm}
+\usepackage{titlesec}
+\usepackage{enumitem}
+
+\titleformat{\section}{\large\bfseries\uppercase}{}{0em}{}[\titlerule]
+
+\begin{document}
+
+\begin{center}
+    {\Huge \textbf{Relatório de Gap Analysis}} \\[0.5cm]
+    {\Large Candidato: \textbf{\VAR{nome}}} \\[0.2cm]
+    {\large Match Estimado com a Vaga: \textbf{\VAR{match}}}
+\end{center}
+\vspace{1cm}
+
+\section*{Resumo da Análise}
+\VAR{resumo_analise}
+\vspace{0.5cm}
+
+\section*{Pontos Fortes (Alinhados com a Vaga)}
+\begin{itemize}[leftmargin=*]
+    \BLOCK{ for item in pontos_fortes }
+    \item \VAR{item}
+    \BLOCK{ endfor }
+\end{itemize}
+\vspace{0.5cm}
+
+\section*{Lacunas Críticas (O que falta)}
+\begin{itemize}[leftmargin=*]
+    \BLOCK{ for item in lacunas_criticas }
+    \item \VAR{item}
+    \BLOCK{ endfor }
+\end{itemize}
+\vspace{0.5cm}
+
+\section*{Plano de Ação (Para a Entrevista)}
+\begin{itemize}[leftmargin=*]
+    \BLOCK{ for item in plano_acao }
+    \item \VAR{item}
+    \BLOCK{ endfor }
+\end{itemize}
+
+\end{document}

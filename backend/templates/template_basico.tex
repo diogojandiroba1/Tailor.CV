@@ -1,0 +1,120 @@
+% GitHub Repo and Documentation: https://github.com/celiobjunior/resume-template
+% Copyright (c) 2025 Celio B Junior. All rights reserved.
+
+\documentclass[a4paper,10pt]{article}
+
+% --- PACOTES: BASE / IDIOMA ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[portuguese]{babel}
+
+% --- PACOTES: LAYOUT / TIPOGRAFIA ---
+\usepackage{geometry}
+\usepackage{parskip}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{array}
+\usepackage{tabularx}
+
+% --- PACOTES: LINKS / BOOKMARKS ---
+\usepackage{hyperref}
+\usepackage{bookmark}
+\usepackage{xurl}
+
+% --- CONFIGURAÇÃO: MARGENS / ESPAÇAMENTO ---
+\geometry{top=1.5cm, bottom=1.5cm, left=1.5cm, right=1.5cm}
+\setcounter{secnumdepth}{0}
+\setlist[itemize]{
+    leftmargin=0.75em,
+    itemsep=0.2em,
+    topsep=0.25em,
+    parsep=0em,
+    partopsep=0em
+}
+
+\pagestyle{empty}
+
+% --- CONFIGURAÇÃO: METADADOS / LINKS ---
+\hypersetup{
+    pdftitle={CV \VAR{nome}},
+    pdfauthor={\VAR{nome}},
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=black,
+    citecolor=black,
+    bookmarksdepth=2
+}
+
+% --- CONFIGURAÇÃO: TÍTULOS ---
+\titleformat{\section}
+{\Large\bfseries}
+{}
+{0em}
+{}
+[\titlerule\vspace{0.5ex}]
+\titleformat{\subsection}
+{\normalsize\bfseries}
+{}
+{0em}
+{}
+\titlespacing*{\subsection}{0pt}{0.35em}{0.15em}
+
+% Macro para entradas do currículo
+\newcounter{cventry}
+\newcommand{\cventry}[4]{%
+    \refstepcounter{cventry}%
+    \phantomsection%
+    \pdfbookmark[2]{#1}{cventry-\thecventry}%
+    \noindent\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}X >{\raggedleft\arraybackslash}X@{}}
+    \textbf{#1} & #2 \\
+    \textit{#3} & \textit{#4} \\
+    \end{tabularx}
+}
+
+% --- INÍCIO DO DOCUMENTO ---
+\begin{document}
+
+% --- CABEÇALHO ---
+\begin{center}
+    {\LARGE \textbf{\VAR{nome}}} 
+    \\ [0.1cm]
+    \VAR{contato} % Vai receber algo como: Cidade, Estado • email@exemplo.com • linkedin/in/user
+\end{center}
+
+% --- RESUMO ---
+\BLOCK{ if resumo }
+\section{Resumo Profissional}
+\VAR{resumo}
+\vspace{0.5cm}
+\BLOCK{ endif }
+
+% --- EXPERIÊNCIA ---
+\BLOCK{ if experiencias }
+\section{Experiência}
+    \BLOCK{ for exp in experiencias }
+    \cventry{\VAR{exp.empresa}}{\VAR{exp.local}}{\VAR{exp.cargo}}{\VAR{exp.data}}
+        \begin{itemize}
+            \BLOCK{ for desc in exp.descricoes }
+            \item \VAR{desc}
+            \BLOCK{ endfor }
+        \end{itemize}
+    \BLOCK{ endfor }
+\BLOCK{ endif }
+
+% --- HABILIDADES ---
+\section{Habilidades}
+    \begin{itemize}
+        \item \textbf{Técnicas:} \VAR{habilidades_tecnicas}
+        \item \textbf{Idiomas:} \VAR{idiomas}
+    \end{itemize}
+
+% --- EDUCAÇÃO ---
+\BLOCK{ if educacao }
+\section{Educação}
+    \BLOCK{ for edu in educacao }
+    \cventry{\VAR{edu.instituicao}}{\VAR{edu.local}}{\VAR{edu.curso}}{\VAR{edu.data}}
+    \BLOCK{ endfor }
+\BLOCK{ endif }
+
+\end{document}
