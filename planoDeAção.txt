@@ -1,0 +1,43 @@
+🗺️ Plano de Ação: Tailor.CV SaaS
+Fase 1: Autenticação (A Porta de Entrada)
+Não existe saldo ou histórico sem saber quem é o usuário. Precisamos de um sistema de login rápido e seguro.
+
+Front-end: Integrar uma solução de autenticação pronta para Next.js (como o Clerk ou NextAuth/Auth.js). O Clerk é perfeito para SaaS porque já te dá as telas de login e cadastro prontas.
+
+Back-end: Configurar o FastAPI para receber o token do usuário e validar quem está fazendo a requisição.
+
+Meta: O usuário só consegue ver a tela de upload de currículo se estiver logado.
+
+Fase 2: Banco de Dados (A Memória do Sistema)
+Até agora, o Python apenas recebia o arquivo e jogava fora. Agora precisamos de um banco de dados para salvar os créditos e os históricos.
+
+Ferramentas: Vamos usar SQLite (fácil para começar localmente) com SQLAlchemy (o padrão do mercado para Python).
+
+Tabelas necessárias:
+
+Usuarios: ID, email, saldo_creditos (ex: começa com 0 créditos para geração de CV).
+
+Historico_CV: ID do arquivo, ID do usuário, data de criação, tipo (Gap, Seguro, Full Match).
+
+Armazenamento de Arquivos: Os PDFs gerados precisam ser salvos em algum lugar (numa pasta local do servidor por enquanto, e no futuro na AWS S3) para o usuário baixar depois.
+
+Fase 3: A Lógica de Créditos e Monetização
+É aqui que a regra de negócio acontece no seu main.py.
+
+A Regra: * Se o usuário escolher Gap Analyzer: Custa 0 créditos. A rota processa normal.
+
+Se o usuário escolher Seguro/Inclusão: O backend checa no banco de dados se saldo_creditos > 0. Se sim, desconta 1 crédito e gera o PDF. Se não, retorna um erro 403 (Pagamento Necessário) e o front-end mostra um aviso: "Compre mais créditos".
+
+Painel do Usuário: Criar uma página no Next.js chamada "Meu Painel" onde ele vê o saldo atual e a lista de currículos já gerados.
+
+Fase 4: A Limitação do Gap Analyzer (A "Isca")
+O Gap Analyzer precisa ser bom o suficiente para mostrar valor, mas limitado o suficiente para dar vontade de pagar pelo currículo pronto.
+
+Ajuste de Prompt: Vamos alterar o prompt do Gap Analyzer para algo como "Versão Gratuita". Ele vai identificar quantas lacunas existem e listar apenas a primeira, colocando um aviso gerado pela IA: "Existem mais 3 lacunas críticas. Assine o plano premium para ver a análise completa e gerar o currículo ideal."
+
+Visual: O PDF de Gap gerado será mais enxuto, funcionando como um "teaser".
+
+Fase 5: Gateway de Pagamento (Colocando o dinheiro no bolso)
+Integração: Conectar a API do Stripe ou Mercado Pago.
+
+Fluxo: O usuário clica em "Comprar 5 Créditos", paga no cartão/Pix, o Stripe avisa seu backend (via Webhook) que o pagamento caiu, e o backend soma +5 no saldo do usuário no banco de dados.
