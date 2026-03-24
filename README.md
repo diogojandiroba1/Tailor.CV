@@ -39,6 +39,7 @@ O sistema possui fluxos de análise, otimização e formatação:
 * Node.js instalado.
 * Python 3.10+.
 * **MiKTeX** (Windows) ou **TeX Live** (Linux/Mac) instalado e configurado nas variáveis de ambiente (necessário para o comando `pdflatex`).
+* Instalar cm-super no MiKTeX.
 
 ### Configuração de Segurança
 Crie um arquivo chamado `keys.py` na raiz da pasta `backend` para armazenar sua credencial:
