@@ -1,50 +1,58 @@
 # Tailor.CV 📄⚡
 
-Um utilitário alimentado por IA para otimizar, adequar e gerar currículos profissionais prontos para envio, com base em descrições de vagas específicas. O Tailor.CV ajuda candidatos a passarem pelos filtros de ATS (Applicant Tracking Systems) ajustando o conteúdo e formatando o resultado em templates aceitos pelo mercado.
+Um utilitário SaaS alimentado por IA para otimizar, adequar e gerar currículos profissionais prontos para envio, com base em descrições de vagas específicas. O Tailor.CV ajuda candidatos a passarem pelos filtros de ATS (Applicant Tracking Systems) ajustando o conteúdo, injetando o método STAR e formatando o resultado em templates em LaTeX aceitos pelo mercado.
 
 ## 🚀 Funcionalidades
 
-O sistema possui fluxos de análise, otimização e formatação:
+O sistema possui fluxos completos de análise, personalização, otimização e formatação:
 
-### 1. Modos de Operação
-* **🔍 Analisador de Gaps (Gap Analyzer):** Compara o currículo atual com a vaga e gera um relatório estratégico do que está faltando. Sugere tópicos de estudo ou como aproveitar projetos acadêmicos e pessoais para preencher essas lacunas.
-* **🛡️ Otimização Segura:** Reescreve as experiências *existentes* no currículo usando as palavras-chave da vaga, sem inventar nenhuma habilidade que o candidato não possua.
-* **⚠️ Modo Inclusão:** Injeta as palavras-chave e habilidades exigidas pela vaga diretamente no currículo, mesclando-as com as experiências do usuário, independentemente de ele possuir a habilidade ou não.
+### 1. Autenticação e Gestão (SaaS)
+* **🔐 Login e Dashboard:** Sistema de autenticação moderno e seguro. Usuários logados possuem um painel próprio para gerenciar seus dados e, futuramente, seus créditos e histórico de currículos.
 
-### 2. Formatação e Exportação
-* **🎨 Template Recomendado:** Utiliza um template construído em LaTeX focado em clareza, tipografia profissional e estrutura **ATS-Friendly** (fácil de ler por sistemas automatizados de recrutamento).
-* **📥 Exportação Direta para PDF:** O sistema gera o currículo nativamente em PDF de alta qualidade e inicia o download imediato.
+### 2. Modos de Operação (IA)
+* **🔍 Analisador de Gaps (Gap Analyzer):** Compara o currículo atual com a vaga e gera um **relatório executivo em PDF** listando o seu *Match Score*, lacunas críticas e um plano de ação realista do que estudar até a entrevista.
+* **🛡️ Otimização Segura:** Reescreve as experiências *existentes* no currículo usando jargões e palavras-chave da vaga. Aplica o método STAR (Situação, Tarefa, Ação, Resultado) sem inventar anos de experiência falsos.
+* **⚠️ Modo Full Match (Inclusão):** Injeta as ferramentas e requisitos da vaga diretamente nas experiências passadas do usuário de forma agressiva, criando um currículo moldado para burlar filtros engessados de ATS.
+
+### 3. Personalização Modular
+* **⚙️ Currículo "Lego":** O usuário tem o poder de ligar e desligar seções do currículo (Resumo Profissional, Experiência, Cursos e Liderança/Projetos). A IA e o template se adaptam dinamicamente para gerar apenas o que foi solicitado, economizando tokens e tempo.
+
+### 4. Formatação e Exportação
+* **🎨 Template Recomendado:** Utiliza templates construídos em **LaTeX** focados em clareza, tipografia e estrutura 100% **ATS-Friendly**.
+* **📥 Exportação Direta:** O sistema compila o código nativamente no servidor e força o download imediato do PDF de alta qualidade no navegador.
 
 ## 🛠️ Tecnologias Utilizadas
 
-* **Frontend:** React, Next.js, Tailwind CSS.
+* **Frontend:** React, Next.js (Turbopack), Tailwind CSS, Lucide-react (Ícones).
+* **Autenticação:** Clerk.
 * **Backend:** Python, FastAPI.
-* **Manipulação e Leitura de PDF:** `pdfplumber` (para extrair texto do CV original).
-* **Inteligência Artificial:** Google Gemini API (via SDK `google-genai`, utilizando o modelo `gemini-2.5-flash`).
-* **Geração de PDF:** `Jinja2` (para injeção de dados no template) e compilação nativa de **LaTeX** (via `subprocess` chamando `pdflatex`).
+* **Manipulação e Leitura de PDF:** `pdfplumber` (extração de texto).
+* **Inteligência Artificial:** Google Gemini API (via SDK `google-genai`, modelo `gemini-2.5-flash`).
+* **Geração de PDF:** `Jinja2` (injeção dinâmica de dados) e compilação nativa de **LaTeX** (via subprocesso `pdflatex`).
 
 ## ⚙️ Como Funciona
 
-1.  O usuário faz o upload do seu currículo em `.pdf` e cola a descrição da vaga na interface.
-2.  Seleciona o modo de operação da IA.
-3.  O backend extrai o texto do PDF original e envia para o modelo Gemini com um prompt estruturado para retorno em JSON.
-4.  O LLM retorna o conteúdo analisado ou otimizado (Resumo, Experiências, Habilidades, etc.).
-5.  O backend aplica esses dados em um template `.tex` usando variáveis adaptadas do **Jinja2**.
-6.  O sistema executa o compilador LaTeX da máquina para gerar o arquivo final.
-7.  O frontend recebe o binário final e força o download no navegador.
+1. O usuário cria uma conta ou faz login para acessar o gerador.
+2. Faz o upload do currículo original (`.pdf`) e cola a descrição da vaga desejada.
+3. Escolhe o Modo de IA (Gaps, Seguro ou Full Match) e **personaliza quais seções** deseja incluir no documento final.
+4. O backend extrai o texto e monta um prompt dinâmico, exigindo um retorno estrito em JSON.
+5. O LLM aplica as regras de reescrita (sem jargões de IA, focando em fatos e métricas).
+6. O backend injeta o JSON retornado em um template `.tex` usando o Jinja2.
+7. O servidor executa o compilador LaTeX da máquina para gerar o PDF e o devolve para o frontend.
 
 ## 💻 Instalação e Uso Local
 
 ### Pré-requisitos
 * Node.js instalado.
 * Python 3.10+.
-* **MiKTeX** (Windows) ou **TeX Live** (Linux/Mac) instalado e configurado nas variáveis de ambiente (necessário para o comando `pdflatex`).
-* Instalar cm-super no MiKTeX.
+* **MiKTeX** (Windows) ou **TeX Live** (Linux/Mac) configurado nas variáveis de ambiente.
+* Instalar o pacote `cm-super` no MiKTeX (caso use Windows).
 
-### Configuração de Segurança
-Crie um arquivo chamado `keys.py` na raiz da pasta `backend` para armazenar sua credencial:
-```python
-CHAVE_GEMINI = "SUA_CHAVE_AQUI"
+### Configuração do Backend (FastAPI)
+1. Crie um arquivo `keys.py` na raiz da pasta `backend`:
+   ```python
+   CHAVE_GEMINI = "SUA_CHAVE_AQUI"
+
 ### Rodando o Backend (FastAPI)
 \`\`\`bash
 cd backend
@@ -55,6 +63,17 @@ uvicorn main:app --reload
 \`\`\`
 
 ### Rodando o Frontend (Next.js)
+
+1. Crie uma conta no Clerk e um novo projeto.
+2. Crie um arquivo .env.local na raiz da pasta frontend com as suas chaves:
+
+\`\`\`bash
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_sua_chave_aqui
+CLERK_SECRET_KEY=sk_test_sua_chave_secreta_aqui
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+\`\`\`
+Por fim, 
 \`\`\`bash
 cd frontend
 npm install
@@ -62,6 +81,7 @@ npm run dev
 \`\`\`
 
 ## 📝 Próximos Passos / Melhorias Futuras
--[ ] Sistema de Créditos e Monetização (SaaS): Implementar modelo de uso onde o "Gap Analyzer" funciona como ferramenta gratuita (entregando apenas o relatório de análise) e a geração/otimização real do PDF do currículo é restrita a usuários pagantes ou com saldo de créditos.
--[ ] Extensão para navegador que lê a vaga do LinkedIn e preenche os dados automaticamente.
--[ ] Histórico de currículos gerados por usuário (com sistema de autenticação).
+[x] Histórico de currículos gerados por usuário e sistema de autenticação.
+[ ] Sistema de Créditos e Monetização (SaaS) com Banco de Dados: Implementar modelo Freemium onde o "Gap Analyzer" gasta 0 créditos e a geração de currículos otimizados consome saldo pago (integração via Stripe/Mercado Pago).
+[ ] Editor Web de LaTeX integrado para ajustes finos manuais antes de baixar o PDF.
+[ ] Extensão para navegador ou Web Scraper interno (BeautifulSoup) para extrair os dados da vaga direto de links da Gupy/LinkedIn.
