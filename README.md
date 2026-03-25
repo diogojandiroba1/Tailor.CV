@@ -54,6 +54,7 @@ O sistema possui fluxos completos de análise, personalização, otimização e 
    CHAVE_GEMINI = "SUA_CHAVE_AQUI"
 
 ### Rodando o Backend (FastAPI)
+
 \`\`\`bash
 cd backend
 python -m venv venv
@@ -73,7 +74,9 @@ CLERK_SECRET_KEY=sk_test_sua_chave_secreta_aqui
 NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
 NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
 \`\`\`
+
 Por fim, 
+
 \`\`\`bash
 cd frontend
 npm install
