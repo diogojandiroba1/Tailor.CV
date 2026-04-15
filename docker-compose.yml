@@ -6,3 +6,14 @@ services:
       - "8001:8000"
     volumes:
       - ./backend:/app
+
+  frontend:
+    build: ./frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules # Evita conflito entre o node_modules da sua máquina e do container
+    environment:
+      - WATCHPACK_POLLING=true # Ajuda o hot-reload do Next.js a funcionar melhor no Docker
