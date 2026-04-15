@@ -1,8 +1,8 @@
 FROM python:3.12-slim
 
-# Instala o LaTeX, pacotes extras e o cm-super
+# Instala o LaTeX, pacotes extras, cm-super e o pacote de português
 RUN apt-get update && \
-    apt-get install -y texlive-latex-base texlive-fonts-recommended texlive-latex-extra cm-super && \
+    apt-get install -y texlive-latex-base texlive-fonts-recommended texlive-latex-extra cm-super texlive-lang-portuguese && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 

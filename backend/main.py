@@ -6,11 +6,10 @@ from fastapi import FastAPI, UploadFile, File, Form, Response
 from fastapi.middleware.cors import CORSMiddleware
 from jinja2 import Environment, FileSystemLoader
 
-from keys import CHAVE_GEMINI
-from google import genai
-from google.genai import types
+from keys import CHAVE_OPENROUTER
+from openai import OpenAI
 
-client = genai.Client(api_key=CHAVE_GEMINI)
+client = OpenAI(base_url="https://openrouter.ai/api/v1", api_key=CHAVE_OPENROUTER)
 
 app = FastAPI()
 
@@ -25,11 +24,11 @@ app.add_middleware(
 # Configurando o Jinja2 para não entrar em conflito com o LaTeX
 latex_env = Environment(
     loader=FileSystemLoader("templates"),
-    block_start_string='\BLOCK{',
+    block_start_string=r'\BLOCK{',
     block_end_string='}',
-    variable_start_string='\VAR{',
+    variable_start_string=r'\VAR{',
     variable_end_string='}',
-    comment_start_string='\#{',
+    comment_start_string=r'\#{',
     comment_end_string='}',
 )
 
@@ -139,15 +138,15 @@ async def processar_curriculo(
         texto_extraido = extrair_texto_pdf(file.file)
         prompt_final = montar_prompt(modo, texto_extraido, vaga)
 
-        resposta = client.models.generate_content(
-            model='gemini-2.5-flash',
-            contents=prompt_final,
-            config=types.GenerateContentConfig(
-                response_mime_type="application/json",
-            )
+        resposta = client.chat.completions.create(
+            model="google/gemini-2.5-flash", # Esse é o nome exato do modelo lá no OpenRouter
+            messages=[
+                {"role": "user", "content": prompt_final}
+            ],
+            response_format={"type": "json_object"} # Garante o retorno em JSON
         )
-
-        dados_json = json.loads(resposta.text)
+        texto_resposta = resposta.choices[0].message.content
+        dados_json = json.loads(texto_resposta)
         
         # Função rápida para limpar caracteres que quebram o LaTeX
         def limpa_tex(texto):
