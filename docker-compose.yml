@@ -1,0 +1,8 @@
+services:
+  api:
+    build: ./backend
+    restart: always
+    ports:
+      - "8001:8000"
+    volumes:
+      - ./backend:/app
